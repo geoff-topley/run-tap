@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../../../src/btn_connect.png";
 import { NavLink } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -13,7 +14,7 @@ function redirect() {
 const Navigation = (props) => (
   <Navbar bg="light" expand="lg">
     <Navbar.Brand as={NavLink} to="/" exact>
-      Strava-Tap
+      Run-Tap
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
@@ -21,12 +22,29 @@ const Navigation = (props) => (
         <Nav.Link as={NavLink} to="/" exact>
           Home
         </Nav.Link>
-        <NavDropdown title="Activities" id="basic-nav-dropdown">
-          <NavDropdown.Item href="#action/3.1">Recent</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Races</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Search All</NavDropdown.Item>
-        </NavDropdown>
+
+        {props.auth.isAuthenticated() ? (
+          <NavDropdown title="Activities" id="basic-nav-dropdown">
+            <NavDropdown.Item as={NavLink} to="/activities" exact>
+              Recent
+            </NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to="/races">
+              Races
+            </NavDropdown.Item>
+            {/* <NavDropdown.Divider />
+            <NavDropdown.Item href="#tbd">Search All</NavDropdown.Item> */}
+          </NavDropdown>
+        ) : null}
+
+        {props.auth.isAuthenticated() ? (
+          <Nav.Link as={NavLink} to="/profile" exact>
+            Profile
+          </Nav.Link>
+        ) : null}
+
+        <Nav.Link as={NavLink} to="/about" exact>
+          About
+        </Nav.Link>
       </Nav>
       <Form inline>
         {props.auth.isAuthenticated() ? (
@@ -34,9 +52,12 @@ const Navigation = (props) => (
             Logout
           </Button>
         ) : (
-          <Button variant="primary" onClick={redirect}>
-            Connect to Strava
-          </Button>
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ cursor: "pointer" }}
+            onClick={redirect}
+          />
         )}
       </Form>
     </Navbar.Collapse>
