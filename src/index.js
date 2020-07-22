@@ -4,6 +4,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/toastr/build/toastr.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
