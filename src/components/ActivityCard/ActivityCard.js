@@ -11,31 +11,31 @@ const printLabel = (workoutType) => {
   switch (workoutType) {
     case 0:
       return (
-        <Badge pill variant="dark">
-          None
+        <Badge pill variant="dark" className="float-right">
+          Base Building
         </Badge>
       );
     case 1:
       return (
-        <Badge pill variant="danger">
+        <Badge pill variant="danger" className="float-right">
           Race
         </Badge>
       );
     case 2:
       return (
-        <Badge pill variant="warning">
+        <Badge pill variant="warning" className="float-right">
           Long Run
         </Badge>
       );
     case 3:
       return (
-        <Badge pill variant="info">
+        <Badge pill variant="info" className="float-right">
           Workout
         </Badge>
       );
     default:
       return (
-        <Badge pill variant="primary">
+        <Badge pill variant="primary" className="float-right">
           TBD
         </Badge>
       );
@@ -55,7 +55,7 @@ const Activity = ({
     <Card>
       <Card.Header as="h5">
         <Row>
-          <Col md={9}>
+          <Col md={8}>
             <Link to={"/activities/" + id} onClick={routeToFullActivity}>
               {name}
             </Link>
