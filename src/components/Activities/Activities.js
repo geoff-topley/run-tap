@@ -9,7 +9,7 @@ import Spinner from "react-bootstrap/Spinner";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import * as convert from "../../calculations/calculations";
+import * as convert from "../../helpers/calculations";
 import { handleError } from "../../errorHandling/ErrorHandling";
 
 class Activities extends React.Component {

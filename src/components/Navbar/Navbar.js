@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function redirect() {
-  window.location.href = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}/exchange_token&approval_prompt=force&scope=activity:read`;
+  window.location.href = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}/exchange_token&approval_prompt=force&scope=activity:read,activity:write`;
 }
 
 const Navigation = (props) => (
@@ -48,7 +48,7 @@ const Navigation = (props) => (
       </Nav>
       <Form inline>
         {props.auth.isAuthenticated() ? (
-          <Button variant="primary" onClick={props.auth.logout}>
+          <Button variant="light" onClick={props.auth.logout}>
             Logout
           </Button>
         ) : (

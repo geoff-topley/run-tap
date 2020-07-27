@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Spinner from "react-bootstrap/Spinner";
 import { handleError } from "../../errorHandling/ErrorHandling";
-import * as convert from "../../calculations/calculations";
+import * as convert from "../../helpers/calculations";
 
 class Races extends React.Component {
   state = {

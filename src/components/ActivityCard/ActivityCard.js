@@ -55,11 +55,7 @@ const Activity = ({
     <Card>
       <Card.Header as="h5">
         <Row>
-          <Col md={8}>
-            <Link to={"/activities/" + id} onClick={routeToFullActivity}>
-              {name}
-            </Link>
-          </Col>
+          <Col md={8}>{name}</Col>
           <Col>{printLabel(workoutType)}</Col>
         </Row>
       </Card.Header>
@@ -69,8 +65,14 @@ const Activity = ({
           {distance} Miles | {time}
         </Card.Title>
         <Card.Text>
-          <Button variant="success" block>
-            Update Strava Activity
+          <Button
+            as={Link}
+            to={"/activities/" + id}
+            onClick={routeToFullActivity}
+            variant="success"
+            block
+          >
+            Activity Analysis
           </Button>
         </Card.Text>
       </Card.Body>
