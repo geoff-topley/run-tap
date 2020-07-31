@@ -6,8 +6,10 @@ import Form from "react-bootstrap/Form";
 const ActivityModal = ({
   showModal,
   activityName,
+  workout_type,
   onClickCancelModal,
   onChangeActivityName,
+  onChangeWorkoutType,
   saveNewActivityName,
 }) => {
   return (
@@ -23,6 +25,19 @@ const ActivityModal = ({
               onChange={onChangeActivityName}
               value={activityName}
             ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              as="select"
+              value={workout_type}
+              onChange={onChangeWorkoutType}
+            >
+              <option>TBD</option>
+              <option>Base Building</option>
+              <option>Workout</option>
+              <option>Long Run</option>
+              <option>Race</option>
+            </Form.Control>
           </Form.Group>
         </Form>
       </Modal.Body>

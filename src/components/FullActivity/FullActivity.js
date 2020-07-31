@@ -4,6 +4,10 @@ import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 import polyline from "@mapbox/polyline";
 import ActivityModal from "./Modal/Modal";
 import { handleError } from "../../errorHandling/ErrorHandling";
+import {
+  getWorkoutTypeText,
+  getWorkoutTypeCode,
+} from "../../helpers/getWorkOutType";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -20,6 +24,7 @@ export class FullActivity extends React.Component {
     polyline: "",
     showModal: false,
     activityName: "",
+    workout_type: null,
     id: "",
   };
 
@@ -49,6 +54,7 @@ export class FullActivity extends React.Component {
           isLoading: false,
           activity: response.data,
           activityName: response.data.name,
+          workout_type: response.data.workout_type,
           lat: response.data.start_latitude,
           lng: response.data.start_longitude,
           polyline: response.data.map.polyline,
@@ -132,9 +138,12 @@ export class FullActivity extends React.Component {
 
   onChangeActivityName = (event) => {
     let activityName = event.target.value;
-    this.setState({
-      activityName,
-    });
+    this.setState({ activityName });
+  };
+
+  onChangeWorkoutType = (event) => {
+    let workout_type = getWorkoutTypeCode(event.target.value);
+    this.setState({ workout_type });
   };
 
   saveNewActivityName = () => {
@@ -147,6 +156,7 @@ export class FullActivity extends React.Component {
       url: url,
       data: {
         name: this.state.activityName,
+        workout_type: this.state.workout_type,
       },
       headers: { Authorization: `Bearer ${access_token}` },
     })
@@ -164,9 +174,10 @@ export class FullActivity extends React.Component {
   };
 
   render() {
+    let { showModal } = this.state;
     const { name } = this.state.activity;
     let activityName = this.state.activityName;
-    let { showModal } = this.state;
+    let workout_type = getWorkoutTypeText(this.state.workout_type);
 
     return (
       <div>
@@ -203,8 +214,10 @@ export class FullActivity extends React.Component {
             <ActivityModal
               showModal={showModal}
               activityName={activityName}
+              workout_type={workout_type}
               onClickCancelModal={this.onClickCancelModal}
               onChangeActivityName={this.onChangeActivityName}
+              onChangeWorkoutType={this.onChangeWorkoutType}
               saveNewActivityName={this.saveNewActivityName}
             />
 
