@@ -82,7 +82,7 @@ class Races extends React.Component {
     return (
       <div>
         {this.state.isPageLoading ? (
-          <Container>
+          <Container style={{ marginTop: "16px" }}>
             <Row>
               <Col md={{ offset: 5 }}>
                 <Spinner size="lg" animation="border" />

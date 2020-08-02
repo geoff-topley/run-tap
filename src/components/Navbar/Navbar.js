@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../src/btn_connect.png";
+import stravaConnect from "../../../src/stravaConnect.png";
 import { NavLink } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -53,8 +53,8 @@ const Navigation = (props) => (
           </Button>
         ) : (
           <img
-            src={logo}
-            alt="Logo"
+            src={stravaConnect}
+            alt="stravaConnect"
             style={{ cursor: "pointer" }}
             onClick={redirect}
           />

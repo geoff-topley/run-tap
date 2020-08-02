@@ -207,7 +207,7 @@ class Activities extends React.Component {
         </Row>
 
         {this.state.isPageLoading ? (
-          <Container>
+          <Container style={{ marginTop: "16px" }}>
             <Row>
               <Col md={{ offset: 5 }}>
                 <Spinner size="lg" animation="border" />

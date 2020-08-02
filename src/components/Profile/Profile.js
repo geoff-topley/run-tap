@@ -42,7 +42,7 @@ class Profile extends React.Component {
           </Container>
         ) : (
           <div>
-            <Row>
+            <Row style={{ marginTop: "16px" }}>
               <Col>
                 <Image
                   src={profileData.profile}
