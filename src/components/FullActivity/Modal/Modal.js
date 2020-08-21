@@ -10,7 +10,10 @@ const ActivityModal = ({
   onClickCancelModal,
   onChangeActivityName,
   onChangeWorkoutType,
-  saveNewActivityName,
+  updateActivity,
+  shoeOptions,
+  onChangeShoeList,
+  shoeName,
 }) => {
   return (
     <Modal show={showModal} animation={false}>
@@ -39,13 +42,19 @@ const ActivityModal = ({
               <option>Race</option>
             </Form.Control>
           </Form.Group>
+
+          <Form.Group>
+            <Form.Control as="select" value={shoeName} onChange={onChangeShoeList}>
+              {shoeOptions}
+            </Form.Control>
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClickCancelModal}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={saveNewActivityName}>
+        <Button variant="primary" onClick={updateActivity}>
           Save Changes
         </Button>
       </Modal.Footer>

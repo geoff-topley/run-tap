@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function redirect() {
-  window.location.href = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}/exchange_token&approval_prompt=force&scope=activity:read,activity:write`;
+  window.location.href = `https://www.strava.com/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}/exchange_token&approval_prompt=force&scope=activity:read,activity:write,profile:read_all`;
 }
 
 const Navigation = (props) => (

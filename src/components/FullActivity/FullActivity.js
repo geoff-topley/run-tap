@@ -18,6 +18,9 @@ import Button from "react-bootstrap/Button";
 export class FullActivity extends React.Component {
   state = {
     isLoading: true,
+    shoes: [],
+    shoeId: "",
+    shoeName: "",
     activity: {},
     lat: 0,
     lng: 0,
@@ -32,12 +35,27 @@ export class FullActivity extends React.Component {
     // activity ID passed from Link and used to retrieve all Activity data
     this.setState({ id: this.props.match.params.id });
     this.retrieveActivityData(this.props.match.params.id);
+    this.retrieveGear();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.lat !== this.state.lat || prevState.lng !== this.state.lng)
       this.loadMap();
   }
+
+  retrieveGear = () => {
+    const access_token = localStorage.getItem("access_token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    };
+
+    const url = "https://www.strava.com/api/v3/athlete";
+    axios.get(url, config).then((response) => {
+      this.setState({ shoes: response.data.shoes });
+    });
+  };
 
   retrieveActivityData = (id) => {
     const access_token = localStorage.getItem("access_token");
@@ -55,6 +73,7 @@ export class FullActivity extends React.Component {
           activity: response.data,
           activityName: response.data.name,
           workout_type: response.data.workout_type,
+          shoeName: response.data.gear.name,
           lat: response.data.start_latitude,
           lng: response.data.start_longitude,
           polyline: response.data.map.polyline,
@@ -146,7 +165,7 @@ export class FullActivity extends React.Component {
     this.setState({ workout_type });
   };
 
-  saveNewActivityName = () => {
+  updateActivity = () => {
     const { id } = this.state;
     let url = `https://www.strava.com/api/v3/activities/${id}`;
     const access_token = localStorage.getItem("access_token");
@@ -157,6 +176,7 @@ export class FullActivity extends React.Component {
       data: {
         name: this.state.activityName,
         workout_type: this.state.workout_type,
+        gear_id: this.state.shoeId,
       },
       headers: { Authorization: `Bearer ${access_token}` },
     })
@@ -173,16 +193,31 @@ export class FullActivity extends React.Component {
       });
   };
 
+  onChangeShoeList = (event) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const shoeId = optionElement.getAttribute("id");
+
+    this.setState({ shoeName: event.target.value, shoeId });
+  };
+
   render() {
     let { showModal } = this.state;
     const { name } = this.state.activity;
     let activityName = this.state.activityName;
     let workout_type = getWorkoutTypeText(this.state.workout_type);
+    let shoeOptions = this.state.shoes.map((shoe) => {
+      return (
+        <option key={shoe.id} id={shoe.id}>
+          {shoe.name}
+        </option>
+      );
+    });
 
     return (
       <div>
         {this.state.isLoading ? (
-          <Container style={{ marginTop: "8px" }}>
+          <Container style={{ marginTop: "16px" }}>
             <Row>
               <Col md={{ offset: 5 }}>
                 <Spinner size="lg" animation="border" />
@@ -191,7 +226,7 @@ export class FullActivity extends React.Component {
           </Container>
         ) : (
           <>
-            <Row style={{ marginTop: "8px" }}>
+            <Row style={{ marginTop: "16px" }}>
               <Col>
                 <Card bg="light" className="text-center">
                   <Card.Body>
@@ -218,10 +253,13 @@ export class FullActivity extends React.Component {
               onClickCancelModal={this.onClickCancelModal}
               onChangeActivityName={this.onChangeActivityName}
               onChangeWorkoutType={this.onChangeWorkoutType}
-              saveNewActivityName={this.saveNewActivityName}
+              updateActivity={this.updateActivity}
+              shoeOptions={shoeOptions}
+              onChangeShoeList={this.onChangeShoeList}
+              shoeName={this.state.shoeName}
             />
 
-            <Row style={{ marginTop: "8px" }}>
+            <Row style={{ marginTop: "16px" }}>
               <Col md={6}>
                 <div
                   style={{ height: "400px", width: "500px" }}
