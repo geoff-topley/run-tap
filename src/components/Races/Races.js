@@ -1,10 +1,9 @@
 import React from "react";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 import Activity from "../ActivityCard/ActivityCard";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
 import { handleError } from "../../errorHandling/ErrorHandling";
 import * as convert from "../../helpers/calculations";
 
@@ -80,19 +79,7 @@ class Races extends React.Component {
       });
 
     return (
-      <div>
-        {this.state.isPageLoading ? (
-          <Container style={{ marginTop: "16px" }}>
-            <Row>
-              <Col md={{ offset: 5 }}>
-                <Spinner size="lg" animation="border" />
-              </Col>
-            </Row>
-          </Container>
-        ) : (
-          <div>{raceGrid}</div>
-        )}
-      </div>
+      <div>{this.state.isPageLoading ? <Loader /> : <div>{raceGrid}</div>}</div>
     );
   }
 }

@@ -1,11 +1,10 @@
 import React from "react";
 import axios from "axios";
 import _ from "lodash";
+import Loader from "../Loader/Loader";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
@@ -206,17 +205,7 @@ class Activities extends React.Component {
           </Col>
         </Row>
 
-        {this.state.isPageLoading ? (
-          <Container style={{ marginTop: "16px" }}>
-            <Row>
-              <Col md={{ offset: 5 }}>
-                <Spinner size="lg" animation="border" />
-              </Col>
-            </Row>
-          </Container>
-        ) : (
-          <div>{activityGrid}</div>
-        )}
+        {this.state.isPageLoading ? <Loader /> : <div>{activityGrid}</div>}
       </>
     );
   }

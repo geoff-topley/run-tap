@@ -1,8 +1,7 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
+import Loader from "../Loader/Loader";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Spinner from "react-bootstrap/Spinner";
 import Image from "react-bootstrap/Image";
 
 class Profile extends React.Component {
@@ -33,13 +32,7 @@ class Profile extends React.Component {
     return (
       <div>
         {isPageLoading ? (
-          <Container>
-            <Row>
-              <Col md={{ offset: 5 }}>
-                <Spinner size="lg" animation="border" />
-              </Col>
-            </Row>
-          </Container>
+          <Loader />
         ) : (
           <div>
             <Row style={{ marginTop: "16px" }}>

@@ -1,19 +1,14 @@
 import React from "react";
 import axios from "axios/index";
-import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
-import polyline from "@mapbox/polyline";
 import ActivityModal from "./Modal/Modal";
+import Map from "./Map/Map";
+import Loader from "../Loader/Loader";
+import Header from "./Header/Header";
 import { handleError } from "../../errorHandling/ErrorHandling";
 import {
   getWorkoutTypeText,
   getWorkoutTypeCode,
 } from "../../helpers/getWorkOutType";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
 
 export class FullActivity extends React.Component {
   state = {
@@ -36,11 +31,6 @@ export class FullActivity extends React.Component {
     this.setState({ id: this.props.match.params.id });
     this.retrieveActivityData(this.props.match.params.id);
     this.retrieveGear();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.lat !== this.state.lat || prevState.lng !== this.state.lng)
-      this.loadMap();
   }
 
   retrieveGear = () => {
@@ -87,63 +77,6 @@ export class FullActivity extends React.Component {
           "error"
         );
       });
-  };
-
-  loadMap = () => {
-    let decodedPolyline = polyline.toGeoJSON(this.state.polyline);
-    let polylineCoordinates = decodedPolyline.coordinates;
-
-    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY;
-
-    const geojson = {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          geometry: {
-            type: "LineString",
-            properties: {},
-            coordinates: polylineCoordinates,
-          },
-        },
-      ],
-    };
-
-    const map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [this.state.lng, this.state.lat],
-      zoom: 13,
-    });
-
-    map.on("load", function () {
-      map.addSource("LineString", {
-        type: "geojson",
-        data: geojson,
-      });
-      map.addLayer({
-        id: "LineString",
-        type: "line",
-        source: "LineString",
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#DC143C",
-          "line-width": 5,
-        },
-      });
-
-      let coordinates = geojson.features[0].geometry.coordinates;
-      let bounds = coordinates.reduce((bounds, coordinate) => {
-        return bounds.extend(coordinate);
-      }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-
-      map.fitBounds(bounds, {
-        padding: 20,
-      });
-    });
   };
 
   onClickOpenModal = () => {
@@ -217,34 +150,16 @@ export class FullActivity extends React.Component {
     return (
       <div>
         {this.state.isLoading ? (
-          <Container style={{ marginTop: "16px" }}>
-            <Row>
-              <Col md={{ offset: 5 }}>
-                <Spinner size="lg" animation="border" />
-              </Col>
-            </Row>
-          </Container>
+          <Loader />
         ) : (
           <>
-            <Row style={{ marginTop: "16px" }}>
-              <Col>
-                <Card bg="light" className="text-center">
-                  <Card.Body>
-                    <h6>
-                      {name}{" "}
-                      <Button
-                        style={{ marginLeft: "8px" }}
-                        variant="primary"
-                        size="sm"
-                        onClick={this.onClickOpenModal}
-                      >
-                        Edit
-                      </Button>
-                    </h6>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
+            <Header name={name} onClickOpenModal={this.onClickOpenModal} />
+
+            <Map
+              lat={this.state.lat}
+              lng={this.state.lng}
+              polyline={this.state.polyline}
+            />
 
             <ActivityModal
               showModal={showModal}
@@ -258,15 +173,6 @@ export class FullActivity extends React.Component {
               onChangeShoeList={this.onChangeShoeList}
               shoeName={this.state.shoeName}
             />
-
-            <Row style={{ marginTop: "16px" }}>
-              <Col md={6}>
-                <div
-                  style={{ height: "400px", width: "500px" }}
-                  ref={(el) => (this.mapContainer = el)}
-                />
-              </Col>
-            </Row>
           </>
         )}
       </div>
