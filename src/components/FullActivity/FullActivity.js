@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios/index";
+import stravaInstance from "../../axios";
 import ActivityModal from "./Modal/Modal";
 import Map from "./Map/Map";
 import Loader from "../Loader/Loader";
@@ -34,29 +34,16 @@ export class FullActivity extends React.Component {
   }
 
   retrieveGear = () => {
-    const access_token = localStorage.getItem("access_token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    };
-
-    const url = "https://www.strava.com/api/v3/athlete";
-    axios.get(url, config).then((response) => {
+    const url = "/athlete";
+    stravaInstance.get(url).then((response) => {
       this.setState({ shoes: response.data.shoes });
     });
   };
 
   retrieveActivityData = (id) => {
-    const access_token = localStorage.getItem("access_token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    };
-    const url = `https://www.strava.com/api/v3/activities/${id}`;
-    axios
-      .get(url, config)
+    const url = `/activities/${id}`;
+    stravaInstance
+      .get(url)
       .then((response) => {
         this.setState({
           isLoading: false,
@@ -100,19 +87,16 @@ export class FullActivity extends React.Component {
 
   updateActivity = () => {
     const { id } = this.state;
-    let url = `https://www.strava.com/api/v3/activities/${id}`;
-    const access_token = localStorage.getItem("access_token");
+    const url = `/activities/${id}`;
 
-    axios({
-      method: "put",
-      url: url,
-      data: {
-        name: this.state.activityName,
-        workout_type: this.state.workout_type,
-        gear_id: this.state.shoeId,
-      },
-      headers: { Authorization: `Bearer ${access_token}` },
-    })
+    const data = {
+      name: this.state.activityName,
+      workout_type: this.state.workout_type,
+      gear_id: this.state.shoeId,
+    };
+
+    stravaInstance
+      .put(url, data)
       .then((response) => {
         this.setState({ showModal: false, activity: response.data });
       })

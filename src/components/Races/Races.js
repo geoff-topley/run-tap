@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import stravaInstance from "../../axios";
 import Loader from "../Loader/Loader";
 import Activity from "../ActivityCard/ActivityCard";
 import Row from "react-bootstrap/Row";
@@ -18,16 +18,9 @@ class Races extends React.Component {
   }
 
   loadRaces = () => {
-    const access_token = localStorage.getItem("access_token");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    };
-
-    const url = `https://www.strava.com/api/v3/athlete/activities?per_page=200`;
-    axios
-      .get(url, config)
+    const url = `/athlete/activities?per_page=200`;
+    stravaInstance
+      .get(url)
       .then((response) => {
         let races = response.data.filter(
           (activity) => activity.workout_type === 1

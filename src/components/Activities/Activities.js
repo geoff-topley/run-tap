@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import stravaInstance from "../../axios";
 import _ from "lodash";
 import Loader from "../Loader/Loader";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
@@ -62,17 +62,11 @@ class Activities extends React.Component {
   };
 
   loadActivities = () => {
-    const access_token = localStorage.getItem("access_token");
     const { activities, perPage, page } = this.state;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    };
 
-    const url = `https://www.strava.com/api/v3/athlete/activities?per_page=${perPage}&page=${page}`;
-    axios
-      .get(url, config)
+    const url = `/athlete/activities?per_page=${perPage}&page=${page}`;
+    stravaInstance
+      .get(url)
       .then((response) => {
         this.setState({
           activities: [...activities, ...response.data],
