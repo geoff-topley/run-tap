@@ -51,13 +51,13 @@ class App extends React.Component {
           <Route
             path="/activities/:id"
             onEnter={this.isAuthorized}
-            component={FullActivity}
+            render={(props) => <FullActivity auth={this.auth} {...props} />}
           />
           <Route
             exact
             path="/races"
             onEnter={this.isAuthorized}
-            component={Races}
+            render={(props) => <Races auth={this.auth} {...props} />}
           />
 
           <Route

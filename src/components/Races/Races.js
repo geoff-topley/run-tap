@@ -1,5 +1,4 @@
 import React from "react";
-import stravaInstance from "../../axios";
 import Loader from "../Loader/Loader";
 import Activity from "../ActivityCard/ActivityCard";
 import Row from "react-bootstrap/Row";
@@ -8,6 +7,11 @@ import { handleError } from "../../errorHandling/ErrorHandling";
 import * as convert from "../../helpers/calculations";
 
 class Races extends React.Component {
+  constructor(props) {
+    super(props);
+    this.stravaInstance = this.props.auth.setStravaInstance();
+  }
+
   state = {
     isPageLoading: true,
     races: [],
@@ -19,7 +23,8 @@ class Races extends React.Component {
 
   loadRaces = () => {
     const url = `/athlete/activities?per_page=200`;
-    stravaInstance
+
+    this.stravaInstance
       .get(url)
       .then((response) => {
         let races = response.data.filter(

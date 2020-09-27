@@ -31,6 +31,19 @@ export default class Auth {
     localStorage.setItem("profile", profile);
   };
 
+  setStravaInstance = () => {
+    const stravaInstance = axios.create({
+      baseURL: "https://www.strava.com/api/v3",
+    });
+
+    const access_token = localStorage.getItem("access_token");
+    stravaInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${access_token}`;
+
+    return stravaInstance;
+  };
+
   isAuthenticated = () => {
     const expires_at = JSON.parse(localStorage.getItem("expires_at"));
     return new Date().getTime() < expires_at;

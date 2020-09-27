@@ -1,5 +1,4 @@
 import React from "react";
-import stravaInstance from "../../axios";
 import ActivityModal from "./Modal/Modal";
 import Map from "./Map/Map";
 import Loader from "../Loader/Loader";
@@ -11,6 +10,11 @@ import {
 } from "../../helpers/getWorkOutType";
 
 export class FullActivity extends React.Component {
+  constructor(props) {
+    super(props);
+    this.stravaInstance = this.props.auth.setStravaInstance();
+  }
+
   state = {
     isLoading: true,
     shoes: [],
@@ -35,14 +39,16 @@ export class FullActivity extends React.Component {
 
   retrieveGear = () => {
     const url = "/athlete";
-    stravaInstance.get(url).then((response) => {
+
+    this.stravaInstance.get(url).then((response) => {
       this.setState({ shoes: response.data.shoes });
     });
   };
 
   retrieveActivityData = (id) => {
     const url = `/activities/${id}`;
-    stravaInstance
+
+    this.stravaInstance
       .get(url)
       .then((response) => {
         this.setState({
@@ -86,6 +92,8 @@ export class FullActivity extends React.Component {
   };
 
   updateActivity = () => {
+    this.setState({ isLoading: true });
+
     const { id } = this.state;
     const url = `/activities/${id}`;
 
@@ -95,10 +103,14 @@ export class FullActivity extends React.Component {
       gear_id: this.state.shoeId,
     };
 
-    stravaInstance
+    this.stravaInstance
       .put(url, data)
       .then((response) => {
-        this.setState({ showModal: false, activity: response.data });
+        this.setState({
+          showModal: false,
+          activity: response.data,
+          isLoading: false,
+        });
       })
       .catch(() => {
         handleError(

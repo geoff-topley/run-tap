@@ -1,5 +1,4 @@
 import React from "react";
-import stravaInstance from "../../axios";
 import _ from "lodash";
 import Loader from "../Loader/Loader";
 import ActivityCard from "../../components/ActivityCard/ActivityCard";
@@ -14,7 +13,8 @@ import { handleError } from "../../errorHandling/ErrorHandling";
 class Activities extends React.Component {
   constructor(props) {
     super(props);
-
+    this.stravaInstance = this.props.auth.setStravaInstance();
+    
     // Since scroll events can fire at a high rate, the event handler shouldn't execute computationally
     // expensive operations such as DOM modifications. Instead, it is recommended to throttle
     this.callback = _.throttle(() => {
@@ -63,9 +63,9 @@ class Activities extends React.Component {
 
   loadActivities = () => {
     const { activities, perPage, page } = this.state;
-
     const url = `/athlete/activities?per_page=${perPage}&page=${page}`;
-    stravaInstance
+
+    this.stravaInstance
       .get(url)
       .then((response) => {
         this.setState({
