@@ -1,7 +1,6 @@
 import React from "react";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 import polyline from "@mapbox/polyline";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export class Map extends React.Component {
@@ -68,14 +67,12 @@ export class Map extends React.Component {
 
   render() {
     return (
-      <Row style={{ marginTop: "16px" }}>
-        <Col md={6}>
-          <div
-            style={{ height: "400px", width: "500px" }}
-            id="mapContainer"
-          ></div>
-        </Col>
-      </Row>
+      <Col md={4}>
+        <div
+          style={{ height: "400px", width: "500px" }}
+          id="mapContainer"
+        ></div>
+      </Col>
     );
   }
 }

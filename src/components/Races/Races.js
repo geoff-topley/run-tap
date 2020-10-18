@@ -64,7 +64,7 @@ class Races extends React.Component {
                     name={rowItem.name}
                     workoutType={rowItem.workout_type}
                     startDate={rowItem.start_date}
-                    distance={convert.metersToMiles(rowItem.distance)}
+                    distance={convert.metersToMiles(rowItem.distance, 2)}
                     time={convert.secondsToMinutes(rowItem.moving_time)}
                     id={rowItem.id}
                     routeToFullActivity={this.routeToFullActivity}

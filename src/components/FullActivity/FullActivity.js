@@ -1,6 +1,8 @@
 import React from "react";
+import Row from "react-bootstrap/Row";
 import ActivityModal from "./Modal/Modal";
 import Map from "./Map/Map";
+import Laps from "./Laps/Laps";
 import Loader from "../Loader/Loader";
 import Header from "./Header/Header";
 import { handleError } from "../../errorHandling/ErrorHandling";
@@ -60,6 +62,7 @@ export class FullActivity extends React.Component {
           lat: response.data.start_latitude,
           lng: response.data.start_longitude,
           polyline: response.data.map.polyline,
+          mileSplits: response.data.splits_standard,
         });
       })
       .catch(() => {
@@ -151,11 +154,14 @@ export class FullActivity extends React.Component {
           <>
             <Header name={name} onClickOpenModal={this.onClickOpenModal} />
 
-            <Map
-              lat={this.state.lat}
-              lng={this.state.lng}
-              polyline={this.state.polyline}
-            />
+            <Row style={{ marginTop: "16px" }}>
+              <Map
+                lat={this.state.lat}
+                lng={this.state.lng}
+                polyline={this.state.polyline}
+              />
+              <Laps mileSplits={this.state.mileSplits} />
+            </Row>
 
             <ActivityModal
               showModal={showModal}
