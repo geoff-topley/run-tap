@@ -6,8 +6,22 @@ export default class Auth {
   }
 
   exchangeAuthCode = (authCode) => {
+    const stravaInstance = this.setStravaInstance();
+    const url = process.env.REACT_APP_BACKEND;
+    stravaInstance
+      .get(url, {
+        params: { code: authCode },
+      })
+      .then((response) => {
+        this.setSession(response);
+        this.history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     // proxy set up in setupProxy.js so I can test locally on localhost:9000
-    const url = `/.netlify/functions/getSessionData?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&code=${authCode}`;
+    /*const url = `/.netlify/functions/getSessionData?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&code=${authCode}`;
     axios
       .post(url)
       .then((response) => {
@@ -16,7 +30,7 @@ export default class Auth {
       })
       .catch((error) => {
         console.log(error);
-      });
+      });*/
   };
 
   setSession = (authResult) => {
