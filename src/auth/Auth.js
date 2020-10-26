@@ -7,7 +7,10 @@ export default class Auth {
 
   exchangeAuthCode = (authCode) => {
     const stravaInstance = this.setStravaInstance();
-    const url = process.env.REACT_APP_BACKEND;
+    const url =
+      process.env.REACT_APP_ENV === "production"
+        ? process.env.REACT_APP_BACKEND
+        : process.env.REACT_APP_LOCAL_BACKEND;
     stravaInstance
       .get(url, {
         params: { code: authCode },
