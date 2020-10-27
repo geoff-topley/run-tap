@@ -12,7 +12,10 @@ export class Map extends React.Component {
     let decodedPolyline = polyline.toGeoJSON(this.props.polyline);
     let polylineCoordinates = decodedPolyline.coordinates;
 
-    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY;
+    mapboxgl.accessToken = process.env.REACT_APP_MAP_LOCAL;
+
+    if (process.env.REACT_APP_ENV === "production")
+      mapboxgl.accessToken = process.env.REACT_APP_MAP;
 
     const geojson = {
       type: "FeatureCollection",
