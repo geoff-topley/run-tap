@@ -1,56 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "../Loader/Loader";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
-class Profile extends React.Component {
-  state = {
-    isPageLoading: true,
-    profileData: {},
-  };
+const Profile = ({ auth }) => {
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [profileData, setProfileData] = useState({});
 
-  componentDidMount() {
-    this.getProfileInfo();
-  }
-
-  getProfileInfo() {
+  // runs after every render and async
+  // run effect and clean it up only once (on mount and unmount), pass an empty array ([]) as a second argument
+  useEffect(() => {
     const profileData = JSON.parse(localStorage.getItem("profile"));
-    this.setState({
-      profileData,
-      isPageLoading: false,
-    });
-  }
+    setProfileData(profileData);
+    setIsPageLoading(false);
+  }, []);
 
-  render() {
-    const { profileData, isPageLoading } = this.state;
-    const firstName = profileData.firstname;
-    const lastName = profileData.lastname;
+  const firstName = profileData.firstname;
+  const lastName = profileData.lastname;
 
-    if (!profileData || !this.props.auth.isAuthenticated()) return null;
+  if (!profileData || !auth.isAuthenticated()) return null;
 
-    return (
-      <div>
-        {isPageLoading ? (
-          <Loader />
-        ) : (
-          <div>
-            <Row style={{ marginTop: "16px" }}>
-              <Col>
-                <Image
-                  src={profileData.profile}
-                  style={{ maxWidth: 200, maxHeight: 200 }}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>{`${firstName} ${lastName}`}</Col>
-            </Row>
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {isPageLoading ? (
+        <Loader />
+      ) : (
+        <div>
+          <Row style={{ marginTop: "16px" }}>
+            <Col>
+              <Image
+                src={profileData.profile}
+                style={{ maxWidth: 200, maxHeight: 200 }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>{`${firstName} ${lastName}`}</Col>
+          </Row>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Profile;
