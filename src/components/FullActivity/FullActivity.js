@@ -158,7 +158,7 @@ export class FullActivity extends React.Component {
               <Map
                 lat={this.state.lat}
                 lng={this.state.lng}
-                polyline={this.state.polyline}
+                polylineData={this.state.polyline}
               />
               <Laps mileSplits={this.state.mileSplits} />
             </Row>
