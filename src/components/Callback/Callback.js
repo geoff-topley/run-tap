@@ -1,28 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 const queryString = require("query-string");
 
-class Callback extends React.Component {
-  componentDidMount() {
-    this.getAuthCode();
-  }
-
-  getAuthCode() {
-    const values = queryString.parse(this.props.location.search);
+const Callback = ({ auth, location, history }) => {
+  useEffect(() => {
+    const values = queryString.parse(location.search);
     const authCode = values.code;
     const error = values.error;
 
     if (authCode && authCode !== "") {
-      this.props.auth.exchangeAuthCode(authCode);
+      auth.exchangeAuthCode(authCode);
     }
 
     if (error && error !== "") {
-      this.props.history.push("/");
+      history.push("/");
     }
-  }
+  });
 
-  render() {
-    return <h1>Authenticating...</h1>;
-  }
-}
+  return <h1>Authenticating...</h1>;
+};
 
 export default Callback;
