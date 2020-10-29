@@ -152,7 +152,12 @@ export class FullActivity extends React.Component {
           <Loader />
         ) : (
           <>
-            <Header name={name} onClickOpenModal={this.onClickOpenModal} />
+            <Header
+              name={name}
+              shoeName={this.state.shoeName}
+              workout_type={workout_type}
+              onClickOpenModal={this.onClickOpenModal}
+            />
 
             <Row style={{ marginTop: "16px" }}>
               <Map

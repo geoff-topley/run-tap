@@ -27,3 +27,18 @@ export const getWorkoutTypeCode = (workoutType) => {
       return null;
   }
 };
+
+export const getWorkoutTypeColor = (workoutType) => {
+  switch (workoutType) {
+    case "Base Building":
+      return "dark";
+    case "Race":
+      return "danger";
+    case "Long Run":
+      return "warning";
+    case "Workout":
+      return "info";
+    default:
+      return "primary";
+  }
+};
