@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleError } from "../errorHandling/ErrorHandling";
 
 export default class Auth {
   constructor(history) {
@@ -21,6 +22,12 @@ export default class Auth {
       })
       .catch((error) => {
         console.log(error);
+        handleError(
+          "Error authenticating. Please check console.",
+          "toast-top-center",
+          "3000",
+          "error"
+        );
       });
   };
 

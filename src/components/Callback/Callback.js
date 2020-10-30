@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import Loader from "../Loader/Loader";
+import { handleError } from "../../errorHandling/ErrorHandling";
 const queryString = require("query-string");
 
 const Callback = ({ auth, location, history }) => {
@@ -12,11 +14,18 @@ const Callback = ({ auth, location, history }) => {
     }
 
     if (error && error !== "") {
+      console.log(error);
+      handleError(
+        "Error authenticating. Please check console.",
+        "toast-top-center",
+        "3000",
+        "error"
+      );
       history.push("/");
     }
   });
 
-  return <h1>Authenticating...</h1>;
+  return <Loader />;
 };
 
 export default Callback;
