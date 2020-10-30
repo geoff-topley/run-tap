@@ -7,7 +7,7 @@ import { metersToMiles } from "../../../helpers/calculations";
 const Laps = ({ mileSplits }) => {
   const milePace = mileSplits.map((mileSplit) => {
     return calculateMilePace(
-      mileSplit.elapsed_time,
+      mileSplit.moving_time,
       metersToMiles(mileSplit.distance, 4)
     );
   });
