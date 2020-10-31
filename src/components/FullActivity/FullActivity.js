@@ -80,8 +80,13 @@ export class FullActivity extends React.Component {
   };
 
   onClickCancelModal = () => {
-    const { name } = this.state.activity;
-    this.setState({ showModal: false, activityName: name });
+    const { activity } = this.state;
+    this.setState({
+      activityName: activity.name,
+      shoeName: activity.gear.name,
+      workout_type: activity.workout_type,
+      showModal: false,
+    });
   };
 
   onChangeActivityName = (event) => {
@@ -97,7 +102,7 @@ export class FullActivity extends React.Component {
   updateActivity = () => {
     this.setState({ isLoading: true });
 
-    const { id } = this.state;
+    const { id, activity } = this.state;
     const url = `/activities/${id}`;
 
     const data = {
@@ -115,13 +120,21 @@ export class FullActivity extends React.Component {
           isLoading: false,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         handleError(
-          "Error updating Activity details. Please check console",
+          "Unable to update activity. Ensure you authorized this operation by checking 'Upload your activities from Run-Tap to Strava' during login.",
           "toast-top-center",
-          "3000",
+          "5000",
           "error"
         );
+        this.setState({
+          isLoading: false,
+          activityName: activity.name,
+          shoeName: activity.gear.name,
+          workout_type: activity.workout_type,
+          showModal: false,
+        });
       });
   };
 
