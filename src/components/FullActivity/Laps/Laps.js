@@ -1,14 +1,13 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import { HorizontalBar } from "react-chartjs-2";
-import { calculateMilePace } from "../../../helpers/calculations";
-import { metersToMiles } from "../../../helpers/calculations";
+import * as calculate from "../../../helpers/calculations";
 
 const Laps = ({ mileSplits }) => {
   const milePace = mileSplits.map((mileSplit) => {
-    return calculateMilePace(
+    return calculate.pace(
       mileSplit.moving_time,
-      metersToMiles(mileSplit.distance, 4)
+      calculate.metersToMiles(mileSplit.distance, 4)
     );
   });
 

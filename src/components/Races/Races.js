@@ -4,7 +4,7 @@ import Activity from "../ActivityCard/ActivityCard";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { handleError } from "../../errorHandling/ErrorHandling";
-import * as convert from "../../helpers/calculations";
+import * as calculate from "../../helpers/calculations";
 
 class Races extends React.Component {
   constructor(props) {
@@ -64,8 +64,8 @@ class Races extends React.Component {
                     name={rowItem.name}
                     workoutType={rowItem.workout_type}
                     startDate={rowItem.start_date}
-                    distance={convert.metersToMiles(rowItem.distance, 2)}
-                    time={convert.secondsToMinutes(rowItem.moving_time)}
+                    distance={calculate.metersToMiles(rowItem.distance, 2)}
+                    time={calculate.secondsToMinutes(rowItem.moving_time)}
                     id={rowItem.id}
                     routeToFullActivity={this.routeToFullActivity}
                   />

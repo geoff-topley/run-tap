@@ -8,7 +8,7 @@ export const secondsToMinutes = (time) => {
   return moment.utc(time * 1000).format("HH:mm:ss");
 };
 
-export const calculateMilePace = (time, distance) => {
+export const pace = (time, distance) => {
   var totalMinutes = time / 60,
     pace = totalMinutes / distance,
     paceMinutes = Math.floor(pace),

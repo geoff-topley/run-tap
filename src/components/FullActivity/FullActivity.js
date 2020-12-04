@@ -1,6 +1,7 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import ActivityModal from "./Modal/Modal";
+import Stats from "./Stats/Stats";
 import Map from "./Map/Map";
 import Laps from "./Laps/Laps";
 import Loader from "../Loader/Loader";
@@ -179,6 +180,7 @@ export class FullActivity extends React.Component {
                 polylineData={this.state.polyline}
               />
               <Laps mileSplits={this.state.mileSplits} />
+              <Stats activity={this.state.activity} />
             </Row>
 
             <ActivityModal
