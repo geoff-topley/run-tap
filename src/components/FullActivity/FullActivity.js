@@ -66,7 +66,8 @@ export class FullActivity extends React.Component {
           mileSplits: response.data.splits_standard,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         handleError(
           "Error loading Activity Data. Please check console.",
           "toast-top-center",

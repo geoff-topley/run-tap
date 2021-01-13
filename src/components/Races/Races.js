@@ -32,7 +32,8 @@ class Races extends React.Component {
         );
         this.setState({ races, isPageLoading: false });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         handleError(
           "Error loading Activities. Please check console.",
           "toast-top-center",

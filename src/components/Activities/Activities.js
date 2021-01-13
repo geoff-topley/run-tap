@@ -14,7 +14,7 @@ class Activities extends React.Component {
   constructor(props) {
     super(props);
     this.stravaInstance = this.props.auth.setStravaInstance();
-    
+
     // Since scroll events can fire at a high rate, the event handler shouldn't execute computationally
     // expensive operations such as DOM modifications. Instead, it is recommended to throttle
     this.callback = _.throttle(() => {
@@ -74,7 +74,8 @@ class Activities extends React.Component {
           isPageLoading: false,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         handleError(
           "Error loading Activities. Please check console.",
           "toast-top-center",
