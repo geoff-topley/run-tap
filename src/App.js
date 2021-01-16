@@ -5,9 +5,9 @@ import Navigation from "./components/Navbar/Navbar";
 import Callback from "./components/Callback/Callback";
 import Auth from "../src/auth/Auth";
 import Home from "../src/components/Home/Home";
-import Activities from "../src/components/Activities/Activities";
+import RecentActivities from "./components/Activities/RecentActivities";
 import FullActivity from "../src/components/FullActivity/FullActivity";
-import Races from "../src/components/Races/Races";
+import Activities from "./components/Activities/Activities";
 import Profile from "../src/components/Profile/Profile";
 import About from "../src/components/About/About";
 
@@ -38,26 +38,26 @@ class App extends React.Component {
           />
           <Route
             exact
-            path="/activities"
+            path="/recent-activities"
             onEnter={this.isAuthorized}
             render={(props) =>
               this.isAuthorized() ? (
-                <Activities auth={this.auth} {...props} />
+                <RecentActivities auth={this.auth} {...props} />
               ) : (
                 <Redirect to="/" />
               )
             }
           />
           <Route
-            path="/activities/:id"
+            path="/full-activity/:id"
             onEnter={this.isAuthorized}
             render={(props) => <FullActivity auth={this.auth} {...props} />}
           />
           <Route
             exact
-            path="/races"
+            path="/activities"
             onEnter={this.isAuthorized}
-            render={(props) => <Races auth={this.auth} {...props} />}
+            render={(props) => <Activities auth={this.auth} {...props} />}
           />
 
           <Route

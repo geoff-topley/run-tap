@@ -67,7 +67,7 @@ const Activity = ({
         <Card.Text>
           <Button
             as={Link}
-            to={"/activities/" + id}
+            to={"/full-activity/" + id}
             onClick={routeToFullActivity}
             variant="success"
             block

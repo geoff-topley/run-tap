@@ -41,14 +41,12 @@ const Navigation = (props) => {
               onMouseEnter={showDropdown}
               onMouseLeave={hideDropdown}
             >
-              <NavDropdown.Item as={NavLink} to="/activities" exact>
+              <NavDropdown.Item as={NavLink} to="/recent-activities" exact>
                 Recent
               </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/races">
-                Races
+              <NavDropdown.Item as={NavLink} to="/activities">
+                All
               </NavDropdown.Item>
-              {/* <NavDropdown.Divider />
-            <NavDropdown.Item href="#tbd">Search All</NavDropdown.Item> */}
             </NavDropdown>
           ) : null}
 
