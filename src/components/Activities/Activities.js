@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Loader from "../Loader/Loader";
 import Activity from "../ActivityCard/ActivityCard";
 import Row from "react-bootstrap/Row";
@@ -10,39 +10,39 @@ import { handleError } from "../../errorHandling/ErrorHandling";
 import * as calculate from "../../helpers/calculations";
 
 const Activities = ({ auth }) => {
-  const stravaInstance = auth.setStravaInstance();
-
   const [pageLoading, setPageLoading] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState("");
   const [activities, setActivities] = useState([]);
   const [activitiesFound, setActivitiesFound] = useState([]);
 
-  // second argument - a list of reasons useEffect should run (dependency array). [] means run once
+  // returns a memoized value - therefore preventing the infinite useEffect loop when referenced value was previously passed
+  const stravaInstance = useMemo(() => auth.setStravaInstance(), [auth]);
+
+  // second argument in useEffect - a list of reasons useEffect should run (dependency array). [] means run once
   useEffect(() => {
+    const loadActivities = () => {
+      const url = `/athlete/activities?per_page=48`;
+
+      stravaInstance
+        .get(url)
+        .then((response) => {
+          let activities = response.data;
+          setActivities(activities);
+          setPageLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          handleError(
+            "Error loading Activities. Please check console.",
+            "toast-top-center",
+            "3000",
+            "error"
+          );
+          setPageLoading(false);
+        });
+    };
     loadActivities();
-  }, []);
-
-  const loadActivities = () => {
-    const url = `/athlete/activities?per_page=48`;
-
-    stravaInstance
-      .get(url)
-      .then((response) => {
-        let activities = response.data;
-        setActivities(activities);
-        setPageLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        handleError(
-          "Error loading Activities. Please check console.",
-          "toast-top-center",
-          "3000",
-          "error"
-        );
-        setPageLoading(false);
-      });
-  };
+  }, [stravaInstance]);
 
   const changeActivitySearchValue = (event) => {
     let searchCriteria = event.target.value;
