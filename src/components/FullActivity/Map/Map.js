@@ -1,9 +1,22 @@
 import React, { useEffect } from "react";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 import polyline from "@mapbox/polyline";
-import Col from "react-bootstrap/Col";
 
-const loadMap = (polylineData, lng, lat) => {
+const Map = ({ polylineData, lng, lat }) => {
+  useEffect(() => {
+    if (polylineData != null && lng != null && lat != null) {
+      buildMap(polylineData, lng, lat);
+    }
+  }, [polylineData, lng, lat]);
+
+  return polylineData == null || lng == null || lat == null ? (
+    <h5 style={{ textAlign: "center" }}>No Map Data for this Activity</h5>
+  ) : (
+    <div style={{ height: "400px", width: "500px" }} id="mapContainer"></div>
+  );
+};
+
+const buildMap = (polylineData, lng, lat) => {
   let decodedPolyline = polyline.toGeoJSON(polylineData);
   let polylineCoordinates = decodedPolyline.coordinates;
 
@@ -61,19 +74,6 @@ const loadMap = (polylineData, lng, lat) => {
       padding: 20,
     });
   });
-};
-
-const Map = ({polylineData, lng, lat}) => {
-
-  useEffect(() => {
-    loadMap(polylineData, lng, lat);
-  });
-
-  return (
-    <Col md={4}>
-      <div style={{ height: "400px", width: "500px" }} id="mapContainer"></div>
-    </Col>
-  );
 };
 
 export default Map;

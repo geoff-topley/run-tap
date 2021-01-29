@@ -1,5 +1,6 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import ActivityModal from "./Modal/Modal";
 import Stats from "./Stats/Stats";
 import Map from "./Map/Map";
@@ -85,7 +86,7 @@ export class FullActivity extends React.Component {
     const { activity } = this.state;
     this.setState({
       activityName: activity.name,
-      shoeName: activity.gear.name,
+      shoeName: activity.gear && activity.gear.name,
       workout_type: activity.workout_type,
       showModal: false,
     });
@@ -175,13 +176,21 @@ export class FullActivity extends React.Component {
             />
 
             <Row style={{ marginTop: "16px" }}>
-              <Map
-                lat={this.state.lat}
-                lng={this.state.lng}
-                polylineData={this.state.polyline}
-              />
-              <Laps mileSplits={this.state.mileSplits} />
-              <Stats activity={this.state.activity} />
+              <Col md={4}>
+                <Map
+                  lat={this.state.lat}
+                  lng={this.state.lng}
+                  polylineData={this.state.polyline}
+                />
+              </Col>
+
+              <Col md={4}>
+                <Laps mileSplits={this.state.mileSplits} />
+              </Col>
+
+              <Col md={4}>
+                <Stats activity={this.state.activity} />
+              </Col>
             </Row>
 
             <ActivityModal
