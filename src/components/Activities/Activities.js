@@ -26,7 +26,7 @@ const Activities = ({ auth }) => {
       stravaInstance
         .get(url)
         .then((response) => {
-          let activities = response.data;
+          let activities = response.data.filter(activity => activity.type === "Run");
           setActivities(activities);
           setPageLoading(false);
         })

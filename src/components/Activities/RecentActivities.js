@@ -64,7 +64,7 @@ class RecentActivities extends React.Component {
       .get(url)
       .then((response) => {
         this.setState({
-          activities: [...activities, ...response.data],
+          activities: [...activities, ...response.data.filter(activity => activity.type === "Run")],
           scrolling: false,
           isPageLoading: false,
         });
