@@ -4,6 +4,10 @@ export const metersToMiles = (distance, fractional) => {
   return (distance / 1609.344).toFixed(fractional);
 };
 
+export const metersToFeet = (distance, fractional) => {
+  return (distance * 3.281).toFixed(fractional);
+};
+
 export const secondsToMinutes = (time) => {
   return moment.utc(time * 1000).format("HH:mm:ss");
 };

@@ -32,6 +32,26 @@ const Stats = ({ activity }) => {
         <Col sz={4}>Time</Col>
         <Col sz={4}>Pace</Col>
       </Row>
+
+      <Row style={{ paddingTop: "32px" }}>
+        <Col sz={4}>
+          <strong>
+            {calculate.metersToFeet(activity.total_elevation_gain, 0)} ft
+          </strong>
+        </Col>
+        <Col sz={4}>
+          <strong>{(activity.average_cadence * 2).toFixed(0)} spm</strong>
+        </Col>
+        <Col>
+          <strong>{activity.calories}</strong>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col sz={4}>Elevation Gain</Col>
+        <Col sz={4}>Avg. Cadence</Col>
+        <Col sz={4}>Calories</Col>
+      </Row>
     </Jumbotron>
   );
 };

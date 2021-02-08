@@ -16,7 +16,6 @@ const Header = ({ name, shoeName, workout_type, onClickOpenModal }) => {
               <Col md={4} style={{ marginTop: "5px" }}>
                 <h5>
                   <Badge
-                    pill
                     variant={getWorkoutTypeColor(workout_type)}
                     className="float-left"
                   >
