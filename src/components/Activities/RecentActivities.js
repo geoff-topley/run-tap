@@ -64,7 +64,10 @@ class RecentActivities extends React.Component {
       .get(url)
       .then((response) => {
         this.setState({
-          activities: [...activities, ...response.data.filter(activity => activity.type === "Run")],
+          activities: [
+            ...activities,
+            ...response.data.filter((activity) => activity.type === "Run"),
+          ],
           scrolling: false,
           isPageLoading: false,
         });
@@ -127,7 +130,13 @@ class RecentActivities extends React.Component {
       });
 
     return (
-      <>{this.state.isPageLoading ? <Loader /> : <div>{activityGrid}</div>}</>
+      <>
+        {this.state.isPageLoading || this.state.scrolling ? (
+          <Loader />
+        ) : (
+          <div>{activityGrid}</div>
+        )}
+      </>
     );
   }
 }
