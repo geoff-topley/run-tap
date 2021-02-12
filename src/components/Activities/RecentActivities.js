@@ -131,11 +131,8 @@ class RecentActivities extends React.Component {
 
     return (
       <>
-        {this.state.isPageLoading || this.state.scrolling ? (
-          <Loader />
-        ) : (
-          <div>{activityGrid}</div>
-        )}
+        {this.state.isPageLoading ? <Loader /> : <div>{activityGrid}</div>}
+        {this.state.scrolling && <Loader />}
       </>
     );
   }
