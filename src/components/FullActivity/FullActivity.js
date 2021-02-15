@@ -61,6 +61,7 @@ export class FullActivity extends React.Component {
           activityName: response.data.name,
           workout_type: response.data.workout_type,
           shoeName: response.data.gear && response.data.gear.name,
+          shoeId: response.data.gear && response.data.gear.id,
           lat: response.data.start_latitude,
           lng: response.data.start_longitude,
           polyline: response.data.map.polyline,
