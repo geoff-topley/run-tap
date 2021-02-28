@@ -112,7 +112,7 @@ class RecentActivities extends React.Component {
           <Row className="activityRow" key={index}>
             {row.map((rowItem) => {
               return (
-                <Col sm={4} style={{ padding: "16px" }} key={rowItem.id}>
+                <Col md={4} style={{ padding: "16px" }} key={rowItem.id}>
                   <ActivityCard
                     name={rowItem.name}
                     workoutType={rowItem.workout_type}

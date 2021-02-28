@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Loader from "../Loader/Loader";
-import Activity from "../ActivityCard/ActivityCard";
+import ActivitiesGrid from "./ActivitiesGrid";
+import SearchBar from "./SearchBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
 import { handleError } from "../../errorHandling/ErrorHandling";
-import * as calculate from "../../helpers/calculations";
 
 const Activities = ({ auth }) => {
   const [pageLoading, setPageLoading] = useState(true);
@@ -26,7 +23,9 @@ const Activities = ({ auth }) => {
       stravaInstance
         .get(url)
         .then((response) => {
-          let activities = response.data.filter(activity => activity.type === "Run");
+          let activities = response.data.filter(
+            (activity) => activity.type === "Run"
+          );
           setActivities(activities);
           setPageLoading(false);
         })
@@ -75,67 +74,26 @@ const Activities = ({ auth }) => {
     setActivitiesFound([]);
   };
 
-  const numOfColumns = 3;
-  const activityList =
-    activitiesFound.length > 0 ? activitiesFound : activities;
-
-  const raceGrid = activityList
-    .map((_activity, index) => {
-      return index % numOfColumns === 0
-        ? activityList.slice(index, index + numOfColumns)
-        : null;
-    })
-    .filter((activity) => activity)
-    .map((row, index) => {
-      return (
-        <Row key={index}>
-          {row.map((rowItem) => {
-            return (
-              <Col sm={4} style={{ padding: "16px" }} key={rowItem.id}>
-                <Activity
-                  name={rowItem.name}
-                  workoutType={rowItem.workout_type}
-                  startDate={rowItem.start_date}
-                  distance={calculate.metersToMiles(rowItem.distance, 2)}
-                  time={calculate.secondsToMinutes(rowItem.moving_time)}
-                  id={rowItem.id}
-                />
-              </Col>
-            );
-          })}
-        </Row>
-      );
-    });
-
   return (
     <>
       <Row>
-        <Col sm={4} style={{ padding: "16px" }}>
-          <InputGroup>
-            <FormControl
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-              onChange={changeActivitySearchValue}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  searchActivities();
-                }
-              }}
-              value={searchCriteria}
-            />
-            <InputGroup.Append>
-              <Button variant="outline-secondary" onClick={searchActivities}>
-                Search
-              </Button>
-              <Button variant="outline-secondary" onClick={clearSearch}>
-                Clear
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
+        <Col md={4} style={{ padding: "16px" }}>
+          <SearchBar
+            searchCriteria={searchCriteria}
+            changeActivitySearchValue={changeActivitySearchValue}
+            searchActivities={searchActivities}
+            clearSearch={clearSearch}
+          />
         </Col>
       </Row>
-      {pageLoading ? <Loader /> : <div>{raceGrid}</div>}
+      {pageLoading ? (
+        <Loader />
+      ) : (
+        <ActivitiesGrid
+          activities={activities}
+          activitiesFound={activitiesFound}
+        />
+      )}
     </>
   );
 };
