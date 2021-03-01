@@ -1,10 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import Loader from "../Loader/Loader";
-import ActivityCard from "../ActivityCard/ActivityCard";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import * as convert from "../../helpers/calculations";
+import ActivitiesGrid from "./ActivitiesGrid";
 import { handleError } from "../../errorHandling/ErrorHandling";
 
 class RecentActivities extends React.Component {
@@ -95,43 +92,17 @@ class RecentActivities extends React.Component {
   };
 
   render() {
-    const { activities } = this.state;
-    const numOfColumns = 3;
-
-    const activityGrid = activities
-
-      // _activity denotes activity param is not actually utilized
-      .map((_activity, index) => {
-        return index % numOfColumns === 0
-          ? activities.slice(index, index + numOfColumns)
-          : null;
-      })
-      .filter((activity) => activity)
-      .map((row, index) => {
-        return (
-          <Row className="activityRow" key={index}>
-            {row.map((rowItem) => {
-              return (
-                <Col md={4} style={{ padding: "16px" }} key={rowItem.id}>
-                  <ActivityCard
-                    name={rowItem.name}
-                    workoutType={rowItem.workout_type}
-                    startDate={rowItem.start_date}
-                    distance={convert.metersToMiles(rowItem.distance, 2)}
-                    time={convert.secondsToMinutes(rowItem.moving_time)}
-                    id={rowItem.id}
-                    routeToFullActivity={this.routeToFullActivity}
-                  />
-                </Col>
-              );
-            })}
-          </Row>
-        );
-      });
-
     return (
       <>
-        {this.state.isPageLoading ? <Loader /> : <div>{activityGrid}</div>}
+        {this.state.isPageLoading ? (
+          <Loader />
+        ) : (
+          <ActivitiesGrid
+            activities={this.state.activities}
+            activitiesFound={0}
+            routeToFullActivity={this.routeToFullActivity}
+          />
+        )}
         {this.state.scrolling && <Loader />}
       </>
     );
