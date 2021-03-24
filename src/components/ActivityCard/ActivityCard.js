@@ -52,7 +52,7 @@ const Activity = ({
   routeToFullActivity,
 }) => {
   return (
-    <Card>
+    <Card border="secondary">
       <Card.Header as="h5">
         <Row>
           <Col md={8}>{name}</Col>
