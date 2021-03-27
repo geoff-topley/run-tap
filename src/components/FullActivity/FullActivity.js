@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import ActivityModal from "./Modal/Modal";
 import Stats from "./Stats/Stats";
 import Map from "./Map/Map";
+import MileSplits from "./MileSplits/MileSplits";
 import Laps from "./Laps/Laps";
 import Loader from "../Loader/Loader";
 import Header from "./Header/Header";
@@ -32,6 +33,8 @@ export class FullActivity extends React.Component {
     activityName: "",
     workout_type: null,
     id: "",
+    mileSplits: [],
+    laps: [],
   };
 
   componentDidMount() {
@@ -66,6 +69,7 @@ export class FullActivity extends React.Component {
           lng: response.data.start_longitude,
           polyline: response.data.map.polyline,
           mileSplits: response.data.splits_standard,
+          laps: response.data.laps,
         });
       })
       .catch((error) => {
@@ -186,9 +190,15 @@ export class FullActivity extends React.Component {
               </Col>
 
               <Col md={4}>
-                <Laps mileSplits={this.state.mileSplits} />
+                <MileSplits mileSplits={this.state.mileSplits} />
               </Col>
 
+              <Col md={4}>
+                <Laps laps={this.state.laps} />
+              </Col>
+            </Row>
+
+            <Row style={{ marginTop: "16px" }}>
               <Col md={4}>
                 <Stats activity={this.state.activity} />
               </Col>
