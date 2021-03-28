@@ -6,7 +6,7 @@ import runTaplogo from "../../../src/runTaplogo.png";
 const Home = () => {
   return (
     <div>
-      <Row style={{ marginTop: "16px" }}>
+      <Row>
         <Col>
           <img
             src={runTaplogo}

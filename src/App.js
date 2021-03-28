@@ -29,8 +29,8 @@ class App extends React.Component {
       /* fragment (included with babel 7 via cra) */
       <>
         <Navigation auth={this.auth} />
+        <Route exact path="/" component={Home} />
         <Container fluid>
-          <Route exact path="/" component={Home} />
           <Route
             path="/callback"
             // passes Auth instance as a prop as well as react-router props hence ...props also
