@@ -200,7 +200,11 @@ export class FullActivity extends React.Component {
 
             <Row style={{ marginTop: "16px" }}>
               <Col md={4}>
-                <Stats activity={this.state.activity} />
+                <Stats 
+                activity={this.state.activity} 
+                shoeId={this.state.shoeId}
+                shoes={this.state.shoes}
+                />
               </Col>
             </Row>
 
