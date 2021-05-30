@@ -190,20 +190,26 @@ export class FullActivity extends React.Component {
               </Col>
 
               <Col md={4}>
-                <MileSplits mileSplits={this.state.mileSplits} />
+                <MileSplits
+                  activityType={this.state.activity.type}
+                  mileSplits={this.state.mileSplits}
+                />
               </Col>
 
               <Col md={4}>
-                <Laps laps={this.state.laps} />
+                <Laps
+                  activityType={this.state.activity.type}
+                  laps={this.state.laps}
+                />
               </Col>
             </Row>
 
             <Row style={{ marginTop: "16px" }}>
               <Col md={4}>
-                <Stats 
-                activity={this.state.activity} 
-                shoeId={this.state.shoeId}
-                shoes={this.state.shoes}
+                <Stats
+                  activity={this.state.activity}
+                  shoeId={this.state.shoeId}
+                  shoes={this.state.shoes}
                 />
               </Col>
             </Row>

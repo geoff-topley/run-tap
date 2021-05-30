@@ -2,11 +2,11 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import * as calculate from "../../../helpers/calculations";
 
-const Laps = ({ laps }) => {
+const Laps = ({ laps, activityType }) => {
   let lapPace = null;
   let lapNames = null;
 
-  if (laps !== undefined) {
+  if (laps !== undefined && activityType !== "Walk" && activityType !== "Ride") {
     lapPace = laps.map((lap) => {
       return calculate.pace(
         lap.moving_time,

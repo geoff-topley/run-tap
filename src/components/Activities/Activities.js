@@ -32,9 +32,7 @@ const Activities = ({ auth }) => {
     stravaInstance
       .get(url)
       .then((response) => {
-        let activities = response.data.filter(
-          (activity) => activity.type === "Run"
-        );
+        let activities = response.data;
         setActivities(activities);
         setPageLoading(false);
       })

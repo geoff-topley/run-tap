@@ -2,11 +2,11 @@ import React from "react";
 import { HorizontalBar } from "react-chartjs-2";
 import * as calculate from "../../../helpers/calculations";
 
-const MileSplits = ({ mileSplits }) => {
+const MileSplits = ({ mileSplits, activityType }) => {
   let milePace = null;
   let lapNames = null;
 
-  if (mileSplits !== undefined) {
+  if (mileSplits !== undefined && activityType !== "Walk" && activityType !== "Ride") {
     milePace = mileSplits.map((mileSplit) => {
       return calculate.pace(
         mileSplit.moving_time,
