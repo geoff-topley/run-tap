@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
@@ -6,7 +7,13 @@ import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
 import { getWorkoutTypeColor } from "../../../helpers/getWorkOutType";
 
-const Header = ({ name, shoeName, workout_type, onClickOpenModal }) => {
+const Header = ({
+  name,
+  shoeName,
+  workout_type,
+  onClickOpenModal,
+  startDate,
+}) => {
   return (
     <Row style={{ marginTop: "16px" }}>
       <Col>
@@ -35,6 +42,11 @@ const Header = ({ name, shoeName, workout_type, onClickOpenModal }) => {
                     Edit
                   </Button>
                 </h5>
+              </Col>
+              <Col md={4}>
+                <h6 className="float-right text-muted">
+                  {moment(startDate).format("Do MMMM YYYY")}{" "}
+                </h6>
               </Col>
             </Row>
           </Card.Body>

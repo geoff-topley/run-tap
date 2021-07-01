@@ -178,6 +178,7 @@ export class FullActivity extends React.Component {
               shoeName={this.state.shoeName}
               workout_type={workout_type}
               onClickOpenModal={this.onClickOpenModal}
+              startDate={this.state.activity.start_date}
             />
 
             <Row style={{ marginTop: "16px" }}>
