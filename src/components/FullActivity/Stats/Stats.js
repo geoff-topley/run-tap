@@ -9,12 +9,12 @@ const getGearMileage = (shoeId, shoes) => {
     return shoe.id === shoeId;
   });
 
-  return calculate.metersToMiles(gear[0].distance);
+  return calculate.metersToMiles(gear.length > 0 && gear[0].distance);
 };
 
 const Stats = ({ activity, shoeId, shoes }) => {
   return (
-    <Jumbotron style={{ height: "400px", width: "500px" }}>
+    <Jumbotron style={{ height: "100%", width: "100%" }}>
       <Row>
         <Col sz={4}>
           <strong>{calculate.metersToMiles(activity.distance, 2)} mi</strong>

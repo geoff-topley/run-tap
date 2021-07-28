@@ -18,7 +18,7 @@ class RecentActivities extends React.Component {
 
   state = {
     isPageLoading: true,
-    perPage: 12,
+    perPage: 21,
     page: 1,
     scrolling: false,
     activities: [],

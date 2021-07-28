@@ -48,7 +48,7 @@ const Laps = ({ laps, activityType }) => {
             yAxes: [
               {
                 ticks: {
-                  max: 7,
+                  max: 9,
                   min: 2,
                 },
               },

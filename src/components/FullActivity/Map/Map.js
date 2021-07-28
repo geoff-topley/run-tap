@@ -12,7 +12,7 @@ const Map = ({ polylineData, lng, lat }) => {
   return polylineData == null || lng == null || lat == null ? (
     <h5 style={{ textAlign: "center" }}>No Map Data for this Activity</h5>
   ) : (
-    <div style={{ height: "400px", width: "500px" }} id="mapContainer"></div>
+    <div style={{ height: "100%", width: "100%" }} id="mapContainer"></div>
   );
 };
 
